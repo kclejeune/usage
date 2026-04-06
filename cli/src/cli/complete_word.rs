@@ -364,12 +364,14 @@ impl CompleteWord {
 
 /// Escape special characters for zsh's `_describe` function.
 /// Colons are field separators, parentheses and brackets are glob qualifiers.
+/// Single quotes break the `eval` call within `__describe` unless escaped.
 fn zsh_escape(s: &str) -> String {
     s.replace(':', "\\:")
         .replace('(', "\\(")
         .replace(')', "\\)")
         .replace('[', "\\[")
         .replace(']', "\\]")
+        .replace('\'', "'\\''")
 }
 
 fn sh(script: &str) -> XXResult<String> {

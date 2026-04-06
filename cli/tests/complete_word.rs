@@ -302,6 +302,16 @@ fn complete_word_zsh_escapes_parens_and_brackets() {
     );
 }
 
+#[test]
+fn complete_word_zsh_escapes_single_quotes() {
+    // zsh's _describe uses eval internally, so unescaped single quotes cause "(eval): unmatched '" errors.
+    let mut c = cmd("quotes-in-descriptions.usage.kdl", Some("zsh"));
+    c.args(["--", "run", ""]);
+    c.assert()
+        .success()
+        .stdout("which:Shows the path that a tool'\\''s bin points to.\nbuild:Build project\n");
+}
+
 fn cmd(example: &str, shell: Option<&str>) -> Command {
     let mut cmd = Command::new(cargo::cargo_bin!("usage"));
     cmd.args(["cw"]);

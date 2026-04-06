@@ -1,0 +1,5 @@
+cmd "run" {
+    arg "task"
+}
+
+complete "task" descriptions=#true run="echo \"which:Shows the path that a tool's bin points to.\nbuild:Build project\""
